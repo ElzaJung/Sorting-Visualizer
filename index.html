@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting Algorithm Visualization</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Sorting Algorithm Visualizer</h1>
+      <nav class="navbar" id="sorting-navbar">
+        <a id="bubble-sort" class="sorting active">Bubble Sort</a>
+        <a id="insertion-sort" class="sorting">Insertion Sort</a>
+        <a id="selection-sort" class="sorting">Selection Sort</a>
+        <a id="merge-sort" class="sorting">Merge Sort</a>
+        <a id="quick-sort" class="sorting">Quick Sort</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="sortingTitle">select the sorting algorithm.</div>
+      <div class="arraySlider">
+        <label for="numElements">Number of Elements: </label>
+        <input type="range" id="numElements" min="10" max="340" value="50" />
+      </div>
+
+      <div id="container"></div>
+
+      <div class="bar-icon">
+        <a class="restart" onclick="init()"> <i class="bx bx-refresh"></i></a>
+        <a class="playPause" onclick="play()"
+          ><i class="bx bx-play-circle"></i
+        ></a>
+      </div>
+
+      <div id="complexity-info">
+        <h3>Complexity Chart</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Average</th>
+              <th>Best</th>
+              <th>Worst</th>
+              <th>Space Complexity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bubble Sort</td>
+              <td>O(n²)</td>
+              <td>O(n)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+            </tr>
+            <!-- More rows for other algorithms -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
+<!--<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting Visualizer</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="title">Sorting Visualizer</h1>
+      <nav class="navbar">
+        <a class="currentAlgorithmButton">Bubble Sort</a>
+        <a class="algorithmButton">Insertion Sort</a>
+        <a class="algorithmButton">Selection Sort</a>
+        <a class="algorithmButton">Merge Sort</a>
+        <a class="algorithmButton">Quick Sort</a>
+      </nav>
+    </header>
+    <div class="arraySlider">
+      elements: <span id="arraySize"></span>
+      <input
+        type="range"
+        min="0"
+        max="100"
+        step="10"
+        id="changeSize"
+        style="background: rgb(139, 139, 139); cursor: pointer"
+      />
+    </div>
+
+    <div id="container"></div>
+    <hr />
+    <div class="bar-icon">
+      <a class="restart" onclick="init()"> <i class="bx bx-refresh"></i></a>
+      <a class="playPause" onclick="playPauseToggle()"
+        ><i class="bx bx-play-circle"></i
+      ></a>
+    </div>
+
+    <div>
+      <p><span id="algoName"></span>Complexity</p>
+      <p>Average Complexity <span id="averageComplexity"></span></p>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+-->
