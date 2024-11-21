@@ -2,6 +2,8 @@ let dataArray = [];
 let numElements = 50;
 let selectedAlgo;
 let audioCtx = null;
+let timeoutId = null;
+let isplaying = false;
 
 init();
 
@@ -10,28 +12,47 @@ function init() {
     numElements = e.target.value;
     generateData();
     drawBars();
+    getSelectedAlgo();
   });
   generateData();
   drawBars();
+  getSelectedAlgo();
+}
+
+function playPauseToggle() {
+  if (isplaying) {
+    pause();
+  } else {
+    play();
+  }
 }
 
 function play() {
+  isplaying = true;
   const copy = [...dataArray]; //paste the copy of the array
   moves = sortingAlgo(copy, selectedAlgo);
   animate(moves);
+  isplaying = false;
 }
 
-// choosing sorting algorithm in nav-bar
-var sortingnavbars = document.getElementById("sorting-navbar");
+function pause() {
+  clearTimeout(timeoutId);
+}
 
-var sortings = sortingnavbars.getElementsByClassName("sorting");
+function getSelectedAlgo() {
+  document.addEventListener("DOMContentLoaded", function () {
+    const sortingButtons = document.querySelectorAll(".sorting");
+    console.log(sortingButtons);
+    selectedAlgo = "bubblesort";
 
-for (var i = 0; i < sortings.length; i++) {
-  sortings[i].addEventListener("click", function () {
-    var current = document.getElementsByClassName("active");
-    current[0].className = current[0].className.replace(" active", "");
-    this.className += " active";
-    selectedAlgo = this.id;
+    sortingButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        sortingButtons.forEach((btn) => btn.classList.remove("active"));
+        this.classList.add("active");
+        selectedAlgo = this.id;
+        console.log("Selected Algorithm:", selectedAlgo);
+      });
+    });
   });
 }
 
@@ -75,6 +96,9 @@ function animate(moves) {
 
 //chossing one algorithm from the nav-bar
 function sortingAlgo(array, selectedAlgo) {
+  if (selectedAlgo == null) {
+    console.error("No algorithm selected");
+  }
   switch (selectedAlgo) {
     case "bubbleSort":
       return bubbleSort(array);
@@ -92,11 +116,12 @@ function sortingAlgo(array, selectedAlgo) {
 }
 
 function bubbleSort(array) {
+  console.log("being runned");
   const moves = [];
   do {
     var swapper = false;
     for (let i = 0; i < array.length - 1; i++) {
-      // moves.push({ indices: [i, i + 1], type: "comp" });
+      //moves.push({ indices: [i, i + 1], type: "comp" });
       if (array[i] > array[i + 1]) {
         [array[i], array[i + 1]] = [array[i + 1], array[i]];
         moves.push({ indices: [i, i + 1], type: "swap" }); //keeps track of all the moves
@@ -104,6 +129,7 @@ function bubbleSort(array) {
       }
     }
   } while (swapper);
+  console.log(moves);
   return moves;
 }
 
@@ -136,32 +162,71 @@ function selectionSort(array) {
 }
 
 function mergeSort(array) {
+  if (array.length <= 1) return [];
+
   const moves = [];
-  if (array.length <= 1) {
-    return array;
-  }
-  const middle = Math.floor(array.length / 2);
-  const left = array.slice(0, middle);
-  const right = array.slice(middle);
-  return merge(mergeSort(left), mergeSort(right));
+  const auxArray = array.slice();
+  mergeSortHelper(array, 0, array.length - 1, auxArray, moves);
+  return moves;
 }
 
-function quickSort(array) {
-  const moves = [];
-  if (array.length <= 1) {
-    return array;
-  }
-  const pivot = array[array.length - 1];
-  const left = [];
-  const right = [];
-  for (let i = 0; i < array.length - 1; i++) {
-    if (array[i] < pivot) {
-      left.push(array[i]);
+function mergeSortHelper(mainArray, startIdx, endIdx, auxArray, moves) {
+  if (startIdx === endIdx) return;
+  const middleIdx = Math.floor((startIdx + endIdx) / 2);
+  mergeSortHelper(auxArray, startIdx, middleIdx, mainArray, moves);
+  mergeSortHelper(auxArray, middleIdx + 1, endIdx, mainArray, moves);
+  doMerge(mainArray, startIdx, middleIdx, endIdx, auxArray, moves);
+}
+
+function doMerge(mainArray, startIdx, middleIdx, endIdx, auxArray, moves) {
+  let k = startIdx,
+    i = startIdx,
+    j = middleIdx + 1;
+  while (i <= middleIdx && j <= endIdx) {
+    if (auxArray[i] <= auxArray[j]) {
+      moves.push({ indices: [k, i], type: "overwrite" });
+      mainArray[k++] = auxArray[i++];
     } else {
-      right.push(array[i]);
+      moves.push({ indices: [k, j], type: "overwrite" });
+      mainArray[k++] = auxArray[j++];
     }
   }
-  return [...quickSort(left), pivot, ...quickSort(right)];
+  while (i <= middleIdx) {
+    moves.push({ indices: [k, i], type: "overwrite" });
+    mainArray[k++] = auxArray[i++];
+  }
+  while (j <= endIdx) {
+    moves.push({ indices: [k, j], type: "overwrite" });
+    mainArray[k++] = auxArray[j++];
+  }
+}
+function quickSort(array) {
+  const moves = [];
+  quickSortHelper(array, 0, array.length - 1, moves);
+  return moves;
+}
+
+function quickSortHelper(array, low, high, moves) {
+  if (low < high) {
+    const pivotIndex = partition(array, low, high, moves);
+    quickSortHelper(array, low, pivotIndex - 1, moves);
+    quickSortHelper(array, pivotIndex + 1, high, moves);
+  }
+}
+
+function partition(array, low, high, moves) {
+  const pivot = array[high];
+  let i = low - 1;
+  for (let j = low; j < high; j++) {
+    if (array[j] < pivot) {
+      i++;
+      [array[i], array[j]] = [array[j], array[i]];
+      moves.push({ indices: [i, j], type: "swap" });
+    }
+  }
+  [array[i + 1], array[high]] = [array[high], array[i + 1]];
+  moves.push({ indices: [i + 1, high], type: "swap" });
+  return i + 1;
 }
 
 function playNote(freq) {

@@ -18,11 +18,11 @@
     <header>
       <h1>Sorting Algorithm Visualizer</h1>
       <nav class="navbar" id="sorting-navbar">
-        <a id="bubble-sort" class="sorting active">Bubble Sort</a>
-        <a id="insertion-sort" class="sorting">Insertion Sort</a>
-        <a id="selection-sort" class="sorting">Selection Sort</a>
-        <a id="merge-sort" class="sorting">Merge Sort</a>
-        <a id="quick-sort" class="sorting">Quick Sort</a>
+        <a id="bubbleSort" class="sorting active">Bubble Sort</a>
+        <a id="insertionSort" class="sorting">Insertion Sort</a>
+        <a id="selectionSort" class="sorting">Selection Sort</a>
+        <a id="mergeSort" class="sorting">Merge Sort</a>
+        <a id="quickSort" class="sorting">Quick Sort</a>
       </nav>
     </header>
 
@@ -37,7 +37,7 @@
 
       <div class="bar-icon">
         <a class="restart" onclick="init()"> <i class="bx bx-refresh"></i></a>
-        <a class="playPause" onclick="play()"
+        <a class="playPause" onclick="playPauseToggle()"
           ><i class="bx bx-play-circle"></i
         ></a>
       </div>
@@ -46,7 +46,7 @@
         <h3>Complexity Chart</h3>
         <table>
           <thead>
-            <tr>
+            <tr class="menu">
               <th>Case</th>
               <th>Average</th>
               <th>Best</th>
@@ -62,7 +62,34 @@
               <td>O(n²)</td>
               <td>O(1)</td>
             </tr>
-            <!-- More rows for other algorithms -->
+            <tr>
+              <td>Insertion Sort</td>
+              <td>O(n²)</td>
+              <td>O(n)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+            </tr>
+            <tr>
+              <td>Selection Sort</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+            </tr>
+            <tr>
+              <td>Merge Sort</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n)</td>
+            </tr>
+            <tr>
+              <td>Quick Sort</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n²)</td>
+              <td>O(log n)</td>
+            </tr>
           </tbody>
         </table>
       </div>
